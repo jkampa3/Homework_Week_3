@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>The Psychic Game</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<body>
+
+    <h1>The Psychic Game</h1>
+
+    <p id="guessesLeft">Guesses Left: </p>
+    <p id="lettersGuessed">Letters Guessed: </p>
+    <p id="wins">Wins: </p>
+    <p id="losses">Losses: </p>
+
+    <script type="text/javascript">
+    
+    //variables
+    var computerChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+    var wins = 0;
+    var losses = 0;
+    var totalGuess = 9;
+    var minusGuess = 9;
+    var letterGuessed = [];
+    var computersLetter = null;
+    //var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+    //script body
+    //computer guess
+
+    //update funtions (when game is in motion: reduce minusGuess by 1, add guessed letters)
+    var letterGuessedFunction = function() {
+        document.querySelector("#lettersGuessed").innerHTML = "Letters Guessed: " + letterGuessed.join(', ');
+    };
+    var minusGuessFunction = function() {
+        document.querySelector("#guessesLeft").innerHTML = "Guesses Left: " + minusGuess;
+    };
+
+    //computer guess generator (typically on reset, need to replace the previous one selected)
+    var computerGuessResetFunction = function() {
+        this.computersLetter = this.computerChoices[Math.floor(Math.random() * this.computerChoices.length)];
+    };
+
+    //reset function (typically for reload browswer or automatically restart game.  Need to set all values back to their native settings)
+    var restartGameFunction = function() {
+        totalGuess = 9;
+        minusGuess = 9;
+        letterGuessed = [];
+
+        letterGuessedFunction();
+        minusGuessFunction();
+        computerGuessResetFunction();
+    console.log(computersLetter);
+    }
+
+    //run the functions
+        computerGuessResetFunction();
+        minusGuessFunction();
+    console.log(computersLetter);
+
+    //time to guess the letter!  Drop counter after each letter pressed while wrapping thru the statement
+    document.onkeyup = function(event) {
+        
+        minusGuess--;
+    
+        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+    
+        letterGuessed.push(userGuess);
+
+        letterGuessedFunction();
+        minusGuessFunction();
+
+        if (minusGuess > 0) {
+            if (userGuess == computersLetter) {
+                wins++;
+                document.querySelector("#wins").innerHTML = "Wins " + wins;
+                console.log("Per Charlie Sheen: WINNING!!");
+                restartGameFunction();
+            }
+        } 
+        else if (minusGuess == 0) {
+            losses++;
+            document.querySelector("#losses").innerHTML = "Losses " + losses;
+            console.log("L is for Loser!!!!");
+            restartGameFunction();
+        }       
+
+    };
+    </script>
+    
+</body>
+</html>
