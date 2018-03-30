@@ -9,8 +9,68 @@
 </head>
 <body>
     <header>
-        <H1 id="h1">H</H1><span><h2>angman - The Game</h2></span>
+        <h1 id="h1">Hangman - The Game</h1>
     </header>
     
+    <body>
+
+        <h3 id="selectedWordH3">Selected Word: </h3> &nbsp;&nbsp; <span id="randomWord"></span>
+        <h3 id="guessedLettersH3">Guessed Letters: </h3> &nbsp;&nbsp; <span id="guessedLetters"></span>
+        <h3 id="livesH3">Lives: </h3> &nbsp;&nbsp; <span id="remainingLives">10</span>
+        <h3 id="winsH3">Wins: </h3>
+        <h3 id="lossesH3">Losses: </h3>
+
+    </body>
+
+    <script type="text/javascript">
+
+        //game variables
+        var validAlpha = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+        var words = ['football','baseball','basketball','hockey','rugby','soccor','golf','cricket','tennis','swimming'];
+        var selectedWord;  //randomly selected word
+        var answerLine = [];  //array for space output
+        var guessCount;  //lives remaining
+        var guessedAlpha;  //valid guessed letters
+        var guessedAlphaOutput = [];  //? Array for output of valid guessed letters
+        var matchedAlpha;  //letters that are winner!
+        var wins = 0;  //total wins
+        var lose = 0;  //total losses
+    
+        //game setup: inital settings and pick word & display
+        //function startGame() {
+
+            //select word from list
+            selectedWord = words[Math.floor(Math.random()*words.length)];  
+        
+            //randomly build array for word to screen
+            for (var i = 0; i < selectedWord.length; i++) {
+                answerLine[i] = "_";
+                document.getElementById("randomWord").innerHTML = answerLine.join(' ');
+            }
+
+            //guess counter
+            guessCount = 10;
+        //}
+
+        //display guessed letter
+            //guessedAlpha = words.length;
+            
+
+        //select letter
+
+        //restart game (ideally automatically when complete)
+
+        //key input
+        document.onkeyup = function(event) {
+
+            var userGuess = event.key;
+
+            validAlpha = String.fromCharCode(event.which).toLowerCase();
+                console.log(validAlpha);
+
+        }
+
+    </script>
+
 </body>
 </html>
