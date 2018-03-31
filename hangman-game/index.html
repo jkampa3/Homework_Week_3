@@ -14,61 +14,117 @@
     
     <body>
 
-        <h3 id="selectedWordH3">Selected Word: </h3> &nbsp;&nbsp; <span id="randomWord"></span>
-        <h3 id="guessedLettersH3">Guessed Letters: </h3> &nbsp;&nbsp; <span id="guessedLetters"></span>
-        <h3 id="livesH3">Lives: </h3> &nbsp;&nbsp; <span id="remainingLives">10</span>
-        <h3 id="winsH3">Wins: </h3>
-        <h3 id="lossesH3">Losses: </h3>
+        <p id="selectedWord">Selected Word: </p> 
+        <p id="lettersGuessed">Letters Guessed: </p> 
+        <p id="remainingLives">Lives: </p> 
+        <p id="wins">Wins: </p>
+        <p id="losses">Losses: </p>
 
     </body>
 
     <script type="text/javascript">
 
         //game variables
-        var validAlpha = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-        var words = ['football','baseball','basketball','hockey','rugby','soccor','golf','cricket','tennis','swimming'];
+        var validAlpha = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]; //alpha array
+        var words = ['football','baseball','basketball','hockey','rugby','soccer','golf','cricket','tennis','swimming']; //word array
         var selectedWord;  //randomly selected word
-        var answerLine = [];  //array for space output
-        var guessCount;  //lives remaining
-        var guessedAlpha;  //valid guessed letters
+        var randomWord = [];  //array for space output
+        var minusLives = 10;  //lives remaining
         var guessedAlphaOutput = [];  //? Array for output of valid guessed letters
-        var matchedAlpha;  //letters that are winner!
+        var uniqueAlpha = [];  //letters that are winner!
         var wins = 0;  //total wins
         var lose = 0;  //total losses
     
         //game setup: inital settings and pick word & display
-        //function startGame() {
+        var randomWordGenerator = function() {
 
             //select word from list
             selectedWord = words[Math.floor(Math.random()*words.length)];  
         
             //randomly build array for word to screen
             for (var i = 0; i < selectedWord.length; i++) {
-                answerLine[i] = "_";
-                document.getElementById("randomWord").innerHTML = answerLine.join(' ');
+                randomWord[i] = "_";
+                document.querySelector("#selectedWord").innerHTML = "Selected Word: " + randomWord.join(' ');
             }
+        };
 
-            //guess counter
-            guessCount = 10;
-        //}
+        //minus lives counter function
+        var minusLivesFunction = function() {
+            document.querySelector("#remainingLives").innerHTML = "Lives: " + minusLives;
+        };
 
         //display guessed letter
-            //guessedAlpha = words.length;
-            
+        var letterGuessedFunction = function() {
+            document.querySelector("#lettersGuessed").innerHTML = "Letters Guessed: " + guessedAlphaOutput.join(', ');
+        };
 
-        //select letter
+        //unique alpha input (no duplicate letters)
+        //var uniqueAlphaFunction = function() {
+        //    for (var j = 0; j < selectedWord.length; j++) {
+        //        if (selectedWord[j] === guessedAlphaOutput) {
+        //            guessedAlphaOutput[j] === uniqueAlpha;
+        //            uniqueAlpha --;
+        //        }
+        //    }
+        //};
 
         //restart game (ideally automatically when complete)
+        var restartGameFunction = function() {
+            minusLives = 10;
+            guessedAlphaOutput = [];
+
+            randomWordGenerator();
+            minusLivesFunction();
+            letterGuessedFunction();
+        //    uniqueAlphaFunction();
+        console.log(selectedWord);
+        };
+
+        //run functions
+            randomWordGenerator();
+            minusLivesFunction();
+            letterGuessedFunction();
+        //    uniqueAlphaFunction();
+        console.log(selectedWord);
 
         //key input
         document.onkeyup = function(event) {
+            var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+            guessedAlphaOutput.push(userGuess);
 
-            var userGuess = event.key;
+        for (var j = 0; j < selectedWord.length; j++) {
+            if (selectedWord[j] === userGuess) {
+                guessedAlphaOutput[j] == userGuess;
+                uniqueAlpha --;
+            }
+        };
+        
 
-            validAlpha = String.fromCharCode(event.which).toLowerCase();
-                console.log(validAlpha);
+        //    minusLives--;
 
-        }
+            minusLivesFunction();
+            letterGuessedFunction();
+        //    uniqueAlphaFunction();
+
+        //if (minusLives > 0) {
+        //        wins++;
+        //       document.querySelector("#wins").innerHTML = "Wins " + wins;
+        //        console.log("Per Charlie Sheen: WINNING!!");
+        //        restartGameFunction();
+        //} 
+        //else if (minusLives == 0) {
+        //    losses++;
+        //    document.querySelector("#losses").innerHTML = "Losses " + losses;
+        //   console.log("L is for Loser!!!!");
+        //    restartGameFunction();
+        //}       
+
+    };
+
+    //Broken: Validate letter if unique
+    //Broken: Match letter to guessed word
+    //Broken: Lives count properly
+    //Broken: Roll Properly
 
     </script>
 

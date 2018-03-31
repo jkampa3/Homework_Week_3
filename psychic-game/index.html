@@ -19,59 +19,56 @@
     <script type="text/javascript">
     
     //variables
-    var computerChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-    var wins = 0;
-    var losses = 0;
-    var totalGuess = 9;
-    var minusGuess = 9;
-    var letterGuessed = [];
-    var computersLetter = null;
+        var computerChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+        var wins = 0;
+        var losses = 0;
+        var minusGuess = 9;
+        var letterGuessed = [];
+        var computersLetter = null;
     //var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
     //script body
     //computer guess
 
     //update funtions (when game is in motion: reduce minusGuess by 1, add guessed letters)
-    var letterGuessedFunction = function() {
-        document.querySelector("#lettersGuessed").innerHTML = "Letters Guessed: " + letterGuessed.join(', ');
-    };
-    var minusGuessFunction = function() {
-        document.querySelector("#guessesLeft").innerHTML = "Guesses Left: " + minusGuess;
-    };
+        var letterGuessedFunction = function() {
+            document.querySelector("#lettersGuessed").innerHTML = "Letters Guessed: " + letterGuessed.join(', ');
+        };
+        var minusGuessFunction = function() {
+            document.querySelector("#guessesLeft").innerHTML = "Guesses Left: " + minusGuess;
+        };
 
     //computer guess generator (typically on reset, need to replace the previous one selected)
-    var computerGuessResetFunction = function() {
-        this.computersLetter = this.computerChoices[Math.floor(Math.random() * this.computerChoices.length)];
-    };
+        var computerGuessResetFunction = function() {
+            this.computersLetter = this.computerChoices[Math.floor(Math.random() * this.computerChoices.length)];
+        };
 
     //reset function (typically for reload browswer or automatically restart game.  Need to set all values back to their native settings)
-    var restartGameFunction = function() {
-        totalGuess = 9;
-        minusGuess = 9;
-        letterGuessed = [];
+        var restartGameFunction = function() {
+            minusGuess = 9;
+            letterGuessed = [];
 
-        letterGuessedFunction();
-        minusGuessFunction();
-        computerGuessResetFunction();
-    console.log(computersLetter);
-    }
+            letterGuessedFunction();
+            minusGuessFunction();
+            computerGuessResetFunction();
+        console.log(computersLetter);
+        };
 
     //run the functions
-        computerGuessResetFunction();
-        minusGuessFunction();
-    console.log(computersLetter);
+            letterGuessedFunction();
+            computerGuessResetFunction();
+            minusGuessFunction();
+        console.log(computersLetter);
 
     //time to guess the letter!  Drop counter after each letter pressed while wrapping thru the statement
-    document.onkeyup = function(event) {
-        
-        minusGuess--;
-    
-        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-    
-        letterGuessed.push(userGuess);
+        document.onkeyup = function(event) {
+            var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+            letterGuessed.push(userGuess);
 
-        letterGuessedFunction();
-        minusGuessFunction();
+            minusGuess--;
+
+            letterGuessedFunction();
+            minusGuessFunction();
 
         if (minusGuess > 0) {
             if (userGuess == computersLetter) {
